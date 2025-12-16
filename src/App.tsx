@@ -1,35 +1,30 @@
-import {Jupyter, Notebook} from '@datalayer/jupyter-react'
-import './App.css'
+import { useJupyter, JupyterReactTheme } from "@datalayer/jupyter-react";
+import { CellExample } from "./examples/CellExample";
+import { NotebookExample } from "./examples/NotebookExample";
 
-export default function App() {
-	return <Jupyter lite>
-		<Notebook
-			nbformat={{
-				cells: [
-					{
-						cell_type: 'code',
-						metadata: Object(),
-						outputs: [],
-						source:
-							"import micropip\nawait micropip.install('ipywidgets')",
-					},
-					{
-						cell_type: 'code',
-						metadata: Object(),
-						outputs: [],
-						source: 'import ipywidgets as widgets\nw = widgets.IntSlider()\nw',
-					}
-				],
-				metadata: {
-					kernelspec: {
-						display_name: 'notebook',
-						language: 'python',
-						name: 'python3',
-					},
-				},
-				nbformat: 4,
-				nbformat_minor: 5,
-			}}
-		/>
-	</Jupyter>
+import "./App.css";
+
+function App() {
+  const { defaultKernel, serviceManager } = useJupyter({
+    jupyterServerUrl: "https://oss.datalayer.run/api/jupyter-server",
+    jupyterServerToken:
+      "60c1661cc408f978c309d04157af55c9588ff9557c9380e4fb50785750703da6",
+    startDefaultKernel: true,
+  });
+
+  return (
+    <div className="App">
+      <JupyterReactTheme>
+        {defaultKernel && <CellExample kernel={defaultKernel} />}
+        {defaultKernel && serviceManager && (
+          <NotebookExample
+            kernel={defaultKernel}
+            serviceManager={serviceManager}
+          />
+        )}
+      </JupyterReactTheme>
+    </div>
+  );
 }
+
+export default App;
