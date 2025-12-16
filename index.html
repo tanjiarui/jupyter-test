@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>jupyter</title>
+	<script id="datalayer-config-data" type="application/json">
+		{
+			"jupyterServerUrl": "https://oss.datalayer.run/api/jupyter-server",
+			"jupyterServerToken": "60c1661cc408f978c309d04157af55c9588ff9557c9380e4fb50785750703da6"
+		}
+	</script>
+	<!-- Needed for ipywidgets -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
