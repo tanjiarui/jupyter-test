@@ -1,37 +1,42 @@
+import {useMemo} from 'react'
 import {JupyterReactTheme, Notebook2, useJupyter} from '@datalayer/jupyter-react'
 import './App.css'
 
 export default function App() {
 	const {kernel, serviceManager} = useJupyter({
-		lite:true,
+		lite: true,
 		startDefaultKernel: false
-	})
+	}), format = useMemo(() => ({
+		cells: [
+			{
+				cell_type: "markdown",
+				metadata: {},
+				source: [
+					"# Hello Jupyter Notebook\n",
+					"\n",
+					"This is a markdown cell.",
+				]
+			},
+			{
+				cell_type: "code",
+				execution_count: null,
+				metadata: {},
+				outputs: [],
+				source: ['print("Hello from code cell!")']
+			}
+		],
+		metadata: {
+			kernelspec: {
+				display_name: "Python 3",
+				language: "python",
+				name: "python3"
+			}
+		},
+		nbformat: 4,
+		nbformat_minor: 5
+	}), [])
 	return <JupyterReactTheme>
 		{serviceManager && kernel && <Notebook2
-			nbformat={{
-				cells: [
-					{
-						cell_type: 'code',
-						metadata: Object(),
-						outputs: [],
-						source: "import micropip\nawait micropip.install('ipywidgets')",
-					},
-					{
-						cell_type: 'code',
-						metadata: Object(),
-						outputs: [],
-						source: 'import ipywidgets as widgets\nw = widgets.IntSlider()\nw',
-					}
-				],
-				metadata: {
-					kernelspec: {
-						display_name: 'notebook',
-						language: 'python',
-						name: 'python3',
-					},
-				},
-				nbformat: 4,
-				nbformat_minor: 5
-			}} id='notebook' kernelId={kernel.id} serviceManager={serviceManager}/>}
+			nbformat={format} id='notebook' height='calc(100vh - 2.6rem)' kernelId={kernel.id} serviceManager={serviceManager}/>}
 	</JupyterReactTheme>
 }
