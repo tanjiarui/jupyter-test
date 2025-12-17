@@ -28,10 +28,37 @@ export const NotebookExample = (props: INotebookExampleProps) => {
     () => [new CellSidebarExtension({ factory: CellSidebarButton })],
     [],
   );
+  
+  const nbformat = useMemo(() => ({
+    cells: [
+      {
+        cell_type: 'code',
+        metadata: {},
+        outputs: [],
+        source: "import micropip\nawait micropip.install('ipywidgets')",
+      },
+      {
+        cell_type: 'code',
+        metadata: {},
+        outputs: [],
+        source: 'import ipywidgets as widgets\nw = widgets.IntSlider()\nw123',
+      },
+    ],
+    metadata: {
+      kernelspec: {
+        display_name: 'notebook',
+        language: 'python',
+        name: 'python3',
+      },
+    },
+    nbformat: 4,
+    nbformat_minor: 5,
+  }), []);
+  
   return (
     <>
       <Notebook2
-        path="ipywidgets.ipynb"
+        nbformat={nbformat}
         id={NOTEBOOK_ID}
         serviceManager={serviceManager}
         kernelId={kernel.id}

@@ -45,6 +45,10 @@ export default defineConfig({
 			{
 				find: /^~(.*)$/,
 				replacement: '$1'
+			},
+			{
+				find: 'buffer/',
+				replacement: 'buffer'
 			}
 		]
 	},
